@@ -1,7 +1,6 @@
 import React from "react";
 import {
   SafeAreaView,
-  StatusBar,
   Text,
   View,
   TouchableOpacity,
@@ -38,8 +37,6 @@ export default function GetStartedScreen() {
 
   return (
     <SafeAreaView className="flex-1 bg-black">
-      <StatusBar barStyle="light-content" />
-
       {/* Logo và Privacy/Sign In */}
       <View className="flex-row justify-between px-4 pt-10">
         <View className="mt-3">
