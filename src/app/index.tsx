@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import GetStartedScreen from "@/pages/GetStartedScreen";
 import HomePageScreen from "@/pages/HomePageScreen";
 import SearchPageScreen from "@/pages/SearchPageScreen";
+import SearchDetailScreen from "@/pages/SearchDetailScreen";
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -23,6 +24,11 @@ export default function App() {
         <Stack.Screen
           name="SearchPageScreen"
           component={SearchPageScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="SearchDetailScreen"
+          component={SearchDetailScreen}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

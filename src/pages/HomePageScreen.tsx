@@ -26,10 +26,10 @@ const NewHotButtonLogo = require("../assets/images/NewHotButtonLogo.png");
 const LaughButtonLogo = require("../assets/images/LaughButtonLogo.png");
 const SearchButtonLogo = require("../assets/images/SearchButtonLogo.png");
 const DownloadButtonLogo = require("../assets/images/DownloadButtonLogo.png");
-export default function HomePageScreen() {
+const HomePageScreen = () => {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
-  const navigation = useNavigation(); // Sử dụng hook điều hướng
+  const navigation = useNavigation();
   // Gọi API khi component được mount
   useEffect(() => {
     const fetchMovies = async () => {
@@ -66,9 +66,9 @@ export default function HomePageScreen() {
       id: 1,
       logo: HomeButtonLogo,
       label: "Home",
-      width: 17,
-      height: 17.5,
-      onPress: () => {},
+      width: 18.74,
+      height: 19.02,
+      onPress: () => navigation.navigate("HomePageScreen"),
     },
     {
       id: 2,
@@ -197,7 +197,7 @@ export default function HomePageScreen() {
         </View>
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
           <View className="flex-row space-x-3 ml-[9px]">
-            {movies.slice(0, 10).map((movie, index) => (
+            {movies.slice(0, 20).map((movie, index) => (
               <View className="relative" key={index}>
                 <Image
                   source={{ uri: movie.image }} // Dùng ảnh từ API
@@ -218,7 +218,7 @@ export default function HomePageScreen() {
             ))}
           </View>
         </ScrollView>
-        <View className="flex-row justify-evenly space-x-2">
+        <View className="flex-row justify-evenly space-x-2 fixed bottom-0 left-0 right-0 bg-black z-50 mt-2 pt-2">
           {navigationItems.map((item) => (
             <TouchableOpacity
               key={item.id}
@@ -239,3 +239,5 @@ export default function HomePageScreen() {
     </SafeAreaView>
   );
 }
+
+export default HomePageScreen;

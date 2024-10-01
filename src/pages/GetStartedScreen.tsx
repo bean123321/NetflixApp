@@ -7,7 +7,7 @@ import {
   Image,
 } from "react-native";
 import Swiper from "react-native-swiper";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation } from "expo-router";
 const NetflixLogo = require("../assets/images/NetflixLogo.png");
 
 // Slide data
@@ -32,7 +32,7 @@ const slides = [
   },
 ];
 
-export default function GetStartedScreen() {
+const GetStartedScreen = () => {
   const navigation = useNavigation(); // Sử dụng hook điều hướng
 
   return (
@@ -88,3 +88,4 @@ export default function GetStartedScreen() {
     </SafeAreaView>
   );
 }
+export default GetStartedScreen;

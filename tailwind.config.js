@@ -6,6 +6,8 @@ module.exports = {
     extend: {
       fontSize: {
         'custom-xl': '32px',
+        'custom-dark': '#292929',
+        'custom-gray': '#8C8C8C',
       },
     },
   },
