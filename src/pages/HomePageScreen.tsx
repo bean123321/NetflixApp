@@ -11,6 +11,7 @@ import {
   Linking,
 } from "react-native";
 import axios from "axios";
+import { useNavigation } from "expo-router";
 
 const NetflixBigLogo = require("../assets/images/NetflixBigLogo.png");
 const LogoTV = require("../assets/images/LogoTV.png");
@@ -19,22 +20,27 @@ const BannerImage = require("../assets/images/BannerImage.png");
 const LogoPlus = require("../assets/images/LogoPlus.png");
 const PlayIcon = require("../assets/images/PlayIcon.png");
 const LogoInfo = require("../assets/images/LogoInfo.png");
+const HomeButtonLogo = require("../assets/images/HomeButtonLogo.png");
 const WhitePlayIcon = require("../assets/images/WhitePlayIcon.png");
-
+const NewHotButtonLogo = require("../assets/images/NewHotButtonLogo.png");
+const LaughButtonLogo = require("../assets/images/LaughButtonLogo.png");
+const SearchButtonLogo = require("../assets/images/SearchButtonLogo.png");
+const DownloadButtonLogo = require("../assets/images/DownloadButtonLogo.png");
 export default function HomePageScreen() {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  const navigation = useNavigation(); // Sử dụng hook điều hướng
   // Gọi API khi component được mount
   useEffect(() => {
     const fetchMovies = async () => {
       const options = {
-        method: 'GET',
-        url: 'https://imdb-top-100-movies.p.rapidapi.com/',
+        method: "GET",
+        url: "https://imdb-top-100-movies.p.rapidapi.com/",
         headers: {
-          'X-RapidAPI-Key': '1886a36d64mshd11fcde5f5e64f1p148a8fjsnb4725be85f69',
-          'X-RapidAPI-Host': 'imdb-top-100-movies.p.rapidapi.com'
-        }
+          "X-RapidAPI-Key":
+            "1886a36d64mshd11fcde5f5e64f1p148a8fjsnb4725be85f69",
+          "X-RapidAPI-Host": "imdb-top-100-movies.p.rapidapi.com",
+        },
       };
 
       try {
@@ -60,7 +66,48 @@ export default function HomePageScreen() {
       </View>
     );
   }
-
+  const navigationItems = [
+    {
+      id: 1,
+      logo: HomeButtonLogo,
+      label: "Home",
+      width: 17,
+      height: 17.5,
+      onPress: () => {},
+    },
+    {
+      id: 2,
+      logo: NewHotButtonLogo,
+      label: "New & Hot",
+      width: 18.74,
+      height: 19.02,
+      onPress: () => {},
+    },
+    {
+      id: 3,
+      logo: LaughButtonLogo,
+      label: "Fast Laughs",
+      width: 21,
+      height: 21,
+      onPress: () => {},
+    },
+    {
+      id: 4,
+      logo: SearchButtonLogo,
+      label: "Search",
+      width: 19.9,
+      height: 19.9,
+      onPress: () => navigation.navigate("SearchPageScreen"),
+    },
+    {
+      id: 5,
+      logo: DownloadButtonLogo,
+      label: "Download",
+      width: 20,
+      height: 20,
+      onPress: () => {},
+    },
+  ];
   return (
     <SafeAreaView className="flex-1 bg-black">
       {/* Banner Image */}
@@ -129,7 +176,9 @@ export default function HomePageScreen() {
                 resizeMode="contain"
                 className="mt-[8px]"
               />
-              <Text className="text-black text-sm font-bold mt-[5px] ml-[10px]">Play</Text>
+              <Text className="text-black text-sm font-bold mt-[5px] ml-[10px]">
+                Play
+              </Text>
             </TouchableOpacity>
             <TouchableOpacity className="flex-col">
               <Image
@@ -160,7 +209,10 @@ export default function HomePageScreen() {
                   className="w-[106px] h-[152px]"
                   resizeMode="cover"
                 />
-                <TouchableOpacity className="absolute top-[50px] left-[30px] w-[54px] h-[54px] rounded-full bg-black bg-opacity-50 justify-center items-center" onPress={() => handlePress(movie.imdb_link)}>
+                <TouchableOpacity
+                  className="absolute top-[50px] left-[30px] w-[54px] h-[54px] rounded-full bg-black bg-opacity-50 justify-center items-center"
+                  onPress={() => handlePress(movie.imdb_link)}
+                >
                   <Image
                     source={WhitePlayIcon}
                     className="w-[18px] h-[18px]"
@@ -172,52 +224,22 @@ export default function HomePageScreen() {
           </View>
         </ScrollView>
         <View className="flex-row justify-evenly space-x-2">
-            <TouchableOpacity className="flex-col">
+          {navigationItems.map((item) => (
+            <TouchableOpacity
+              key={item.id}
+              className="flex-col items-center"
+              onPress={item.onPress}
+            >
               <Image
-                source={LogoPlus}
-                style={{ width: 16.67, height: 16.67 }}
+                source={item.logo}
+                style={{ width: item.width, height: item.height }}
                 resizeMode="contain"
                 className="mb-[5px]"
               />
-              <Text className="text-white text-xs">My List</Text>
+              <Text className="text-white text-xs">{item.label}</Text>
             </TouchableOpacity>
-            <TouchableOpacity className="flex-col">
-              <Image
-                source={LogoPlus}
-                style={{ width: 16.67, height: 16.67 }}
-                resizeMode="contain"
-                className="mb-[5px]"
-              />
-              <Text className="text-white text-xs">My List</Text>
-            </TouchableOpacity>
-            <TouchableOpacity className="flex-col">
-              <Image
-                source={LogoPlus}
-                style={{ width: 16.67, height: 16.67 }}
-                resizeMode="contain"
-                className="mb-[5px]"
-              />
-              <Text className="text-white text-xs">My List</Text>
-            </TouchableOpacity>
-            <TouchableOpacity className="flex-col">
-              <Image
-                source={LogoPlus}
-                style={{ width: 16.67, height: 16.67 }}
-                resizeMode="contain"
-                className="mb-[5px]"
-              />
-              <Text className="text-white text-xs">My List</Text>
-            </TouchableOpacity>
-            <TouchableOpacity className="flex-col">
-              <Image
-                source={LogoPlus}
-                style={{ width: 16.67, height: 16.67 }}
-                resizeMode="contain"
-                className="mb-[5px]"
-              />
-              <Text className="text-white text-xs">My List</Text>
-            </TouchableOpacity>
-          </View>
+          ))}
+        </View>
       </SafeAreaView>
     </SafeAreaView>
   );
