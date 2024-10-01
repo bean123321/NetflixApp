@@ -35,12 +35,7 @@ export default function HomePageScreen() {
     const fetchMovies = async () => {
       const options = {
         method: "GET",
-        url: "https://imdb-top-100-movies.p.rapidapi.com/",
-        headers: {
-          "X-RapidAPI-Key":
-            "1886a36d64mshd11fcde5f5e64f1p148a8fjsnb4725be85f69",
-          "X-RapidAPI-Host": "imdb-top-100-movies.p.rapidapi.com",
-        },
+        url: "https://66fb766d8583ac93b40bd808.mockapi.io/api/movies/movies",
       };
 
       try {
@@ -114,7 +109,7 @@ export default function HomePageScreen() {
       <ImageBackground
         source={BannerImage}
         style={{ width: "100%", height: 538 }}
-        resizeMode="cover"
+        resizeMode="cover" 
       >
         <SafeAreaView className="flex-1">
           {/* Header Section */}
