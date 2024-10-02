@@ -11,6 +11,7 @@ import {
   Linking,
 } from "react-native";
 import axios from "axios";
+import config from "config";
 import NavigationItem from "@/components/NavigationItem";
 const NetflixBigLogo = require("../assets/images/NetflixBigLogo.png");
 const LogoTV = require("../assets/images/LogoTV.png");
@@ -29,12 +30,12 @@ const HomePageScreen = () => {
     const fetchMovies = async () => {
       const options = {
         method: "GET",
-        url: "https://66fb766d8583ac93b40bd808.mockapi.io/api/movies/movies",
+        url: "https://ophim1.com/danh-sach/phim-moi-cap-nhat",
       };
 
       try {
         const response = await axios.request(options);
-        setMovies(response.data);
+        setMovies(response.data.items);
         setLoading(false);
       } catch (error) {
         console.error(error);
@@ -45,10 +46,6 @@ const HomePageScreen = () => {
     fetchMovies();
   }, []);
 
-  const handlePress = (imdbLink) => {
-    Linking.openURL(imdbLink); // Open IMDb link
-  };
-
   if (loading) {
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
@@ -56,7 +53,6 @@ const HomePageScreen = () => {
       </View>
     );
   }
-
   return (
     <SafeAreaView className="flex-1 bg-black">
       {/* Banner Image */}
@@ -152,27 +148,26 @@ const HomePageScreen = () => {
           </Text>
         </View>
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-          <View className="flex-row space-x-3 ml-[9px]">
-            {movies.slice(0, 20).map((movie, index) => (
-              <View className="relative" key={index}>
-                <Image
-                  source={{ uri: movie.image }}
-                  className="w-[106px] h-[152px]"
-                  resizeMode="cover"
-                />
-                <TouchableOpacity
-                  className="absolute top-[50px] left-[30px] w-[54px] h-[54px] rounded-full bg-black bg-opacity-50 justify-center items-center"
-                  onPress={() => handlePress(movie.imdb_link)}
-                >
-                  <Image
-                    source={WhitePlayIcon}
-                    className="w-[18px] h-[18px]"
-                    resizeMode="contain"
-                  />
-                </TouchableOpacity>
-              </View>
-            ))}
-          </View>
+           <View className="flex-row space-x-3 ml-[9px]">
+              {movies.slice(0, 20).map((movie, index) => (
+                  <View className="relative" key={index}>
+                    <Image
+                      source={{ uri: `${config.URL_MOVIES_THUMB}${movie.thumb_url}` }}
+                      className="w-[106px] h-[152px]"
+                      resizeMode="cover"
+                    />
+                    <TouchableOpacity
+                      className="absolute top-[50px] left-[30px] w-[54px] h-[54px] rounded-full bg-black bg-opacity-50 justify-center items-center"
+                    >
+                      <Image
+                        source={WhitePlayIcon}
+                        className="w-[18px] h-[18px]"
+                        resizeMode="contain"
+                      />
+                    </TouchableOpacity>
+                  </View>      
+              ))}
+            </View>
         </ScrollView>
         {/* Navigation Items */}
         <NavigationItem />

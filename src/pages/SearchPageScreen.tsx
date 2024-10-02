@@ -10,6 +10,7 @@ import {
   ScrollView,
 } from "react-native";
 import axios from "axios";
+import config from "config";
 import { useNavigation } from "expo-router";
 import InputText from "@/components/InputText";
 import NavigationItem from "@/components/NavigationItem";
@@ -24,12 +25,12 @@ const SearchPageScreen = () => {
     const fetchMovies = async () => {
       const options = {
         method: "GET",
-        url: "https://66fb766d8583ac93b40bd808.mockapi.io/api/movies/movies",
+        url: "https://ophim1.com/danh-sach/phim-moi-cap-nhat",
       };
 
       try {
         const response = await axios.request(options);
-        setMovies(response.data);
+        setMovies(response.data.items);
         setLoading(false);
       } catch (error) {
         console.error(error);
@@ -40,9 +41,6 @@ const SearchPageScreen = () => {
     fetchMovies();
   }, []);
 
-  const handlePress = (imdbLink) => {
-    Linking.openURL(imdbLink); // Mở liên kết IMDb
-  };
   if (loading) {
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
@@ -67,22 +65,21 @@ const SearchPageScreen = () => {
         <Text className="text-white text-base font-semibold">Movies & TV</Text>
       </View>
       <ScrollView>
-        {movies.slice(0, 20).map((movie) => (
+        {movies.slice(0, 20).map((movie, index) => (
           <TouchableOpacity
-            key={movie.id}
+            key={index}
             className="flex-row justify-between my-2"
-            onPress={() => handlePress(movie.imdb_link)}
           >
             <View className="flex-row items-center">
               <Image
-                source={{ uri: movie.thumbnail }}
+                source={{ uri: `${config.URL_MOVIES_THUMB}${movie.thumb_url}` }}
                 style={{ width: 96, height: 54.05 }}
                 resizeMode="contain"
               />
               <Text className="text-gray-400 text-xs font-bold">
-                {movie.title?.length > 35
-                  ? `${movie.title.slice(0, 35)}...`
-                  : movie.title}
+                {movie.origin_name?.length > 35
+                  ? `${movie.origin_name.slice(0, 35)}...`
+                  : movie.origin_name}
               </Text>
             </View>
             <Image
