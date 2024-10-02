@@ -11,8 +11,7 @@ import {
   Linking,
 } from "react-native";
 import axios from "axios";
-import { useNavigation } from "expo-router";
-
+import NavigationItem from "@/components/NavigationItem";
 const NetflixBigLogo = require("../assets/images/NetflixBigLogo.png");
 const LogoTV = require("../assets/images/LogoTV.png");
 const LogoSmile = require("../assets/images/LogoSmile.png");
@@ -20,17 +19,12 @@ const BannerImage = require("../assets/images/BannerImage.png");
 const LogoPlus = require("../assets/images/LogoPlus.png");
 const PlayIcon = require("../assets/images/PlayIcon.png");
 const LogoInfo = require("../assets/images/LogoInfo.png");
-const HomeButtonLogo = require("../assets/images/HomeButtonLogo.png");
 const WhitePlayIcon = require("../assets/images/WhitePlayIcon.png");
-const NewHotButtonLogo = require("../assets/images/NewHotButtonLogo.png");
-const LaughButtonLogo = require("../assets/images/LaughButtonLogo.png");
-const SearchButtonLogo = require("../assets/images/SearchButtonLogo.png");
-const DownloadButtonLogo = require("../assets/images/DownloadButtonLogo.png");
+
 const HomePageScreen = () => {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
-  const navigation = useNavigation();
-  // Gọi API khi component được mount
+  // Fetch movies from API
   useEffect(() => {
     const fetchMovies = async () => {
       const options = {
@@ -52,8 +46,9 @@ const HomePageScreen = () => {
   }, []);
 
   const handlePress = (imdbLink) => {
-    Linking.openURL(imdbLink); // Mở liên kết IMDb
+    Linking.openURL(imdbLink); // Open IMDb link
   };
+
   if (loading) {
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
@@ -61,55 +56,14 @@ const HomePageScreen = () => {
       </View>
     );
   }
-  const navigationItems = [
-    {
-      id: 1,
-      logo: HomeButtonLogo,
-      label: "Home",
-      width: 18.74,
-      height: 19.02,
-      onPress: () => navigation.navigate("HomePageScreen"),
-    },
-    {
-      id: 2,
-      logo: NewHotButtonLogo,
-      label: "New & Hot",
-      width: 18.74,
-      height: 19.02,
-      onPress: () => {},
-    },
-    {
-      id: 3,
-      logo: LaughButtonLogo,
-      label: "Fast Laughs",
-      width: 21,
-      height: 21,
-      onPress: () => {},
-    },
-    {
-      id: 4,
-      logo: SearchButtonLogo,
-      label: "Search",
-      width: 19.9,
-      height: 19.9,
-      onPress: () => navigation.navigate("SearchPageScreen"),
-    },
-    {
-      id: 5,
-      logo: DownloadButtonLogo,
-      label: "Download",
-      width: 20,
-      height: 20,
-      onPress: () => {},
-    },
-  ];
+
   return (
     <SafeAreaView className="flex-1 bg-black">
       {/* Banner Image */}
       <ImageBackground
         source={BannerImage}
         style={{ width: "100%", height: 538 }}
-        resizeMode="cover" 
+        resizeMode="cover"
       >
         <SafeAreaView className="flex-1">
           {/* Header Section */}
@@ -146,7 +100,7 @@ const HomePageScreen = () => {
             <Text className="text-white text-base">Categories</Text>
           </View>
 
-          {/* Tagline - Moved further down */}
+          {/* Tagline */}
           <View className="absolute bottom-[80px] left-0 right-0 flex-row justify-center space-x-2">
             <Text className="text-white">Exciting</Text>
             <Text className="text-white">•</Text>
@@ -154,6 +108,8 @@ const HomePageScreen = () => {
             <Text className="text-white">•</Text>
             <Text className="text-white">Competition</Text>
           </View>
+
+          {/* Buttons Section */}
           <View className="absolute bottom-[20px] left-0 right-0 flex-row justify-evenly space-x-2">
             <TouchableOpacity className="flex-col">
               <Image
@@ -200,7 +156,7 @@ const HomePageScreen = () => {
             {movies.slice(0, 20).map((movie, index) => (
               <View className="relative" key={index}>
                 <Image
-                  source={{ uri: movie.image }} // Dùng ảnh từ API
+                  source={{ uri: movie.image }}
                   className="w-[106px] h-[152px]"
                   resizeMode="cover"
                 />
@@ -218,26 +174,11 @@ const HomePageScreen = () => {
             ))}
           </View>
         </ScrollView>
-        <View className="flex-row justify-evenly space-x-2 fixed bottom-0 left-0 right-0 bg-black z-50 mt-2 pt-2">
-          {navigationItems.map((item) => (
-            <TouchableOpacity
-              key={item.id}
-              className="flex-col items-center"
-              onPress={item.onPress}
-            >
-              <Image
-                source={item.logo}
-                style={{ width: item.width, height: item.height }}
-                resizeMode="contain"
-                className="mb-[5px]"
-              />
-              <Text className="text-white text-xs">{item.label}</Text>
-            </TouchableOpacity>
-          ))}
-        </View>
+        {/* Navigation Items */}
+        <NavigationItem />
       </SafeAreaView>
     </SafeAreaView>
   );
-}
+};
 
 export default HomePageScreen;

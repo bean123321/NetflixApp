@@ -6,31 +6,10 @@ import {
   TouchableOpacity,
   Image,
 } from "react-native";
+import { slides } from "../assets/data/SlideData";
 import Swiper from "react-native-swiper";
 import { useNavigation } from "expo-router";
 const NetflixLogo = require("../assets/images/NetflixLogo.png");
-
-// Slide data
-const slides = [
-  {
-    id: "1",
-    title: "Unlimited movies, TV shows, and more.",
-    subtitle: "Watch anywhere. Cancel anytime.",
-    description: "Tap the link below to sign up.",
-  },
-  {
-    id: "2",
-    title: "Enjoy on all your devices.",
-    subtitle: "Stream on phones, tablets, laptops, and TVs.",
-    description: "Ready to watch? Click the button below.",
-  },
-  {
-    id: "3",
-    title: "Download your shows.",
-    subtitle: "Watch offline anywhere.",
-    description: "Click to learn more.",
-  },
-];
 
 const GetStartedScreen = () => {
   const navigation = useNavigation(); // Sử dụng hook điều hướng
@@ -87,5 +66,5 @@ const GetStartedScreen = () => {
       </View>
     </SafeAreaView>
   );
-}
+};
 export default GetStartedScreen;
