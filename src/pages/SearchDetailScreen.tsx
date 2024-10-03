@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, SafeAreaView, Image } from "react-native";
+import { View, SafeAreaView, Image, Text } from "react-native";
 import axios from "axios";
 import InputText from "@/components/InputText";
 import { useNavigation } from "expo-router";
@@ -17,7 +17,10 @@ const SearchDetailScreen = () => {
           className="mr-2"
         />
         {/* TextInput */}
-        <InputText onPress={() => navigation.navigate("HomePageScreen")} />
+        <InputText onPress={undefined} />
+      </View>
+      <View className="ml-[9px] my-4">
+        <Text className="text-white text-base font-semibold">Movies & TV</Text>
       </View>
     </SafeAreaView>
   );

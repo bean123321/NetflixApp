@@ -69,7 +69,11 @@ const SearchPageScreen = () => {
           <TouchableOpacity
             key={index}
             className="flex-row justify-between my-2"
-            onPress={() => navigation.navigate("MovieDetailScreen", { movie })}
+            onPress={() => {
+              navigation.navigate("MovieDetailScreen", {
+                slug: movie.slug,
+              });
+            }}
           >
             <View className="flex-row items-center">
               <Image

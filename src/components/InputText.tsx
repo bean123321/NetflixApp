@@ -7,7 +7,7 @@ const InputText = ({ onPress }) => {
       placeholder="Search"
       placeholderTextColor="#737373"
       className="text-white text-sm flex-1 py-2"
-      onPress={onPress}
+      onFocus={onPress}
       style={{ textAlign: "center" }}
     />
   );

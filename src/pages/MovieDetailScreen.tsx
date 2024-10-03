@@ -1,20 +1,28 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Text, View, SafeAreaView, ActivityIndicator } from "react-native";
+import { WebView } from "react-native-webview";
 
 const MovieDetailScreen = ({ route }) => {
   const { slug } = route.params; // Get the slug from route params
   const [movie, setMovie] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [embedLink, setEmbedLink] = useState(""); // State to store the first embed link
 
   useEffect(() => {
     // Function to fetch movie details based on the slug
     const fetchMovieDetails = async () => {
       try {
-        const response = await fetch(`https://ophim1.com/phim/${slug}`);
-        const data = await response.json();
+        const response = await axios.get(`https://ophim1.com/phim/${slug}`);
+        const data = response.data;
 
-        // Assuming the content is available in the data structure
+        // Set the movie details
         setMovie(data.movie);
+
+        // Assuming the first embed link is in episodes[0].server_data[0].link_embed
+        if (data.episodes && data.episodes[0].server_data && data.episodes[0].server_data.length > 0) {
+          setEmbedLink(data?.episodes[0]?.server_data[0].link_embed); // Get the first embed link
+        }
       } catch (error) {
         console.error("Error fetching movie details:", error);
       } finally {
@@ -43,11 +51,15 @@ const MovieDetailScreen = ({ route }) => {
 
   return (
     <SafeAreaView className="flex-1 bg-black">
-      <View>
-        {/* Display the movie content */}
-        <Text className="text-white mt-6">{movie.content}</Text>
-        <Text className="text-white mt-6">{movie.origin_name}</Text>
-        <Text className="text-white mt-6">{movie.slug}</Text>
+      <View className="flex-1 w-full h-full">
+        {embedLink ? (
+          <WebView
+            source={{ uri: embedLink }}
+            className="flex-1" // Use className for WebView
+          />
+        ) : (
+          <Text className="text-white mt-8 ml-3">No link available</Text>
+        )}
       </View>
     </SafeAreaView>
   );
