@@ -13,6 +13,7 @@ import {
 import axios from "axios";
 import config from "config";
 import NavigationItem from "@/components/NavigationItem";
+import { useNavigation } from "expo-router";
 const NetflixBigLogo = require("../assets/images/NetflixBigLogo.png");
 const LogoTV = require("../assets/images/LogoTV.png");
 const LogoSmile = require("../assets/images/LogoSmile.png");
@@ -25,6 +26,7 @@ const WhitePlayIcon = require("../assets/images/WhitePlayIcon.png");
 const HomePageScreen = () => {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigation = useNavigation();
   // Fetch movies from API
   useEffect(() => {
     const fetchMovies = async () => {
@@ -148,26 +150,33 @@ const HomePageScreen = () => {
           </Text>
         </View>
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-           <View className="flex-row space-x-3 ml-[9px]">
-              {movies.slice(0, 20).map((movie, index) => (
-                  <View className="relative" key={index}>
-                    <Image
-                      source={{ uri: `${config.URL_MOVIES_THUMB}${movie.thumb_url}` }}
-                      className="w-[106px] h-[152px]"
-                      resizeMode="cover"
-                    />
-                    <TouchableOpacity
-                      className="absolute top-[50px] left-[30px] w-[54px] h-[54px] rounded-full bg-black bg-opacity-50 justify-center items-center"
-                    >
-                      <Image
-                        source={WhitePlayIcon}
-                        className="w-[18px] h-[18px]"
-                        resizeMode="contain"
-                      />
-                    </TouchableOpacity>
-                  </View>      
-              ))}
-            </View>
+          <View className="flex-row space-x-3 ml-[9px]">
+            {movies.slice(0, 20).map((movie, index) => (
+              <View className="relative" key={index}>
+                <Image
+                  source={{
+                    uri: `${config.URL_MOVIES_THUMB}${movie.thumb_url}`,
+                  }}
+                  className="w-[106px] h-[152px]"
+                  resizeMode="cover"
+                />
+                <TouchableOpacity
+                  className="absolute top-[50px] left-[30px] w-[54px] h-[54px] rounded-full bg-black bg-opacity-50 justify-center items-center"
+                  onPress={() => {
+                    navigation.navigate("MovieDetailScreen", {
+                      slug: movie.slug,
+                    });
+                  }}
+                >
+                  <Image
+                    source={WhitePlayIcon}
+                    className="w-[18px] h-[18px]"
+                    resizeMode="contain"
+                  />
+                </TouchableOpacity>
+              </View>
+            ))}
+          </View>
         </ScrollView>
         {/* Navigation Items */}
         <NavigationItem />

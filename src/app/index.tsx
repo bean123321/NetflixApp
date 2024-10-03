@@ -5,6 +5,8 @@ import GetStartedScreen from "@/pages/GetStartedScreen";
 import HomePageScreen from "@/pages/HomePageScreen";
 import SearchPageScreen from "@/pages/SearchPageScreen";
 import SearchDetailScreen from "@/pages/SearchDetailScreen";
+import MovieDetailScreen from "@/pages/MovieDetailScreen";
+
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -29,6 +31,11 @@ export default function App() {
         <Stack.Screen
           name="SearchDetailScreen"
           component={SearchDetailScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="MovieDetailScreen"
+          component={MovieDetailScreen}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
