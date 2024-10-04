@@ -20,7 +20,11 @@ const MovieDetailScreen = ({ route }) => {
         setMovie(data.movie);
 
         // Assuming the first embed link is in episodes[0].server_data[0].link_embed
-        if (data.episodes && data.episodes[0].server_data && data.episodes[0].server_data.length > 0) {
+        if (
+          data.episodes &&
+          data.episodes[0].server_data &&
+          data.episodes[0].server_data.length > 0
+        ) {
           setEmbedLink(data?.episodes[0]?.server_data[0].link_embed); // Get the first embed link
         }
       } catch (error) {
@@ -53,10 +57,7 @@ const MovieDetailScreen = ({ route }) => {
     <SafeAreaView className="flex-1 bg-black">
       <View className="flex-1 w-full h-full">
         {embedLink ? (
-          <WebView
-            source={{ uri: embedLink }}
-            className="flex-1" // Use className for WebView
-          />
+          <WebView source={{ uri: embedLink }} className="flex-1" />
         ) : (
           <Text className="text-white mt-8 ml-3">No link available</Text>
         )}

@@ -12,11 +12,11 @@ import { useNavigation } from "expo-router";
 const NetflixLogo = require("../assets/images/NetflixLogo.png");
 
 const GetStartedScreen = () => {
-  const navigation = useNavigation(); // Sử dụng hook điều hướng
+  const navigation = useNavigation();
 
   return (
     <SafeAreaView className="flex-1 bg-black">
-      {/* Logo và Privacy/Sign In */}
+      {/* Logo, Privacy/Sign In */}
       <View className="flex-row justify-between px-4 pt-10">
         <View className="mt-3">
           <Image
@@ -31,7 +31,7 @@ const GetStartedScreen = () => {
         </View>
       </View>
 
-      {/* Swiper cho các slide */}
+      {/* Swiper*/}
       <Swiper
         loop={false}
         dot={<View className="w-2 h-2 bg-gray-500 mx-1 rounded-full" />}
@@ -53,11 +53,11 @@ const GetStartedScreen = () => {
         ))}
       </Swiper>
 
-      {/* Nút Get Started */}
+      {/*Get Started */}
       <View className="items-center pb-8">
         <TouchableOpacity
           className="bg-red-600 w-[90%] py-3 rounded-lg"
-          onPress={() => navigation.navigate("HomePageScreen")} // Điều hướng đến HomePage
+          onPress={() => navigation.navigate("HomePageScreen")}
         >
           <Text className="text-white text-lg text-center font-medium">
             Get Started

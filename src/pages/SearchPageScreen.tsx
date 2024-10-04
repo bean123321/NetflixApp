@@ -20,7 +20,7 @@ const SearchPageScreen = () => {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigation = useNavigation();
-  // Gọi API khi component được mount
+  // Call API when component mounted
   useEffect(() => {
     const fetchMovies = async () => {
       const options = {
@@ -51,7 +51,7 @@ const SearchPageScreen = () => {
   return (
     <SafeAreaView className="flex-1 bg-black">
       <View className="mx-2 mt-[50px] bg-gray-800 rounded flex-row justify-center items-center px-4">
-        {/* Icon tìm kiếm */}
+        {/* Icon search */}
         <Image
           source={SearchLogo}
           style={{ width: 13.27, height: 13.26 }}
@@ -59,7 +59,7 @@ const SearchPageScreen = () => {
           className="mr-2"
         />
         {/* TextInput */}
-        <InputText onPress={() => navigation.navigate("SearchDetailScreen")} />
+        <InputText onFocus={() => navigation.navigate("SearchDetailScreen")} />
       </View>
       <View className="ml-[9px] my-4">
         <Text className="text-white text-base font-semibold">Movies & TV</Text>
