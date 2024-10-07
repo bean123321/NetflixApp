@@ -1,11 +1,40 @@
 {
   "expo": {
+    "name": "Netflix",
+    "slug": "netflix",
     "scheme": "acme",
+    "version": "1.0.0",
+    "orientation": "portrait",
     "userInterfaceStyle": "automatic",
-    "orientation": "default",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "cover",
+      "backgroundColor": "#ffffff"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.acme.netflix",
+      "buildNumber": "1.0.0"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.acme.netflix",
+      "versionCode": 1
+    },
     "web": {
       "output": "static",
-      "bundler": "metro"
+      "bundler": "metro",
+      "favicon": "./assets/favicon.png"
     },
     "plugins": [
       [
@@ -14,8 +43,6 @@
           "origin": "https://n"
         }
       ]
-    ],
-    "name": "my-app",
-    "slug": "my-app"
+    ]
   }
 }
