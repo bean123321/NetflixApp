@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   View,
   SafeAreaView,
@@ -8,48 +8,18 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from "react-native";
-import axios from "axios";
 import InputText from "@/components/InputText";
 import { useNavigation } from "expo-router";
 import config from "config";
 import NavigationItem from "@/components/NavigationItem";
+import useFetchMovies from "@/hooks/useFetchMovies";
 
 const SearchLogo = require("../assets/images/SearchLogo.png");
 
 const SearchDetailScreen = () => {
-  const [movies, setMovies] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const { movies, loading, error } = useFetchMovies();
   const [searchQuery, setSearchQuery] = useState("");
   const navigation = useNavigation();
-
-  // Fetch movies from API
-  useEffect(() => {
-    const fetchMovies = async () => {
-      const options = {
-        method: "GET",
-        url: "https://ophim1.com/danh-sach/phim-moi-cap-nhat",
-      };
-
-      try {
-        const response = await axios.request(options);
-        setMovies(response.data.items);
-        setLoading(false);
-      } catch (error) {
-        console.error(error);
-        setLoading(false);
-      }
-    };
-
-    fetchMovies();
-  }, []);
-
-  if (loading) {
-    return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <ActivityIndicator size="large" color="#ffffff" />
-      </View>
-    );
-  }
 
   // Function to chunk movies into groups of 5
   const chunkArray = (array, size) => {
@@ -69,24 +39,37 @@ const SearchDetailScreen = () => {
 
   const movieChunks = chunkArray(filteredMovies.slice(0, 200), 5);
 
+  if (loading) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <ActivityIndicator size="large" color="#ffffff" />
+      </View>
+    );
+  }
+
+  if (error) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <Text style={{ color: "red" }}>Error: {error.message}</Text>
+      </View>
+    );
+  }
+
   return (
     <SafeAreaView className="flex-1 bg-black">
       <View className="mx-2 mt-[50px] bg-gray-800 rounded flex-row justify-center items-center px-4">
-        {/* Icon search */}
         <Image
           source={SearchLogo}
           style={{ width: 13.27, height: 13.26 }}
           resizeMode="contain"
           className="mr-2"
         />
-        {/* TextInput */}
         <InputText value={searchQuery} onChangeText={setSearchQuery} />
       </View>
       <View className="ml-[9px] my-4">
         <Text className="text-white text-base font-semibold">Movies & TV</Text>
       </View>
       <ScrollView showsVerticalScrollIndicator={false}>
-        {/* Render each chunk in a horizontal ScrollView */}
         {movieChunks.map((chunk, chunkIndex) => (
           <ScrollView
             key={chunkIndex}
@@ -117,7 +100,6 @@ const SearchDetailScreen = () => {
           </ScrollView>
         ))}
       </ScrollView>
-      {/* Navigation Items */}
       <NavigationItem />
     </SafeAreaView>
   );

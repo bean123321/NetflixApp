@@ -14,6 +14,7 @@ import axios from "axios";
 import config from "config";
 import NavigationItem from "@/components/NavigationItem";
 import { useNavigation } from "expo-router";
+import useFetchMovies from "@/hooks/useFetchMovies";
 const NetflixBigLogo = require("../assets/images/NetflixBigLogo.png");
 const LogoTV = require("../assets/images/LogoTV.png");
 const LogoSmile = require("../assets/images/LogoSmile.png");
@@ -24,34 +25,21 @@ const LogoInfo = require("../assets/images/LogoInfo.png");
 const WhitePlayIcon = require("../assets/images/WhitePlayIcon.png");
 
 const HomePageScreen = () => {
-  const [movies, setMovies] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const { movies, loading, error } = useFetchMovies();
   const navigation = useNavigation();
-  // Fetch movies from API
-  useEffect(() => {
-    const fetchMovies = async () => {
-      const options = {
-        method: "GET",
-        url: "https://ophim1.com/danh-sach/phim-moi-cap-nhat",
-      };
-
-      try {
-        const response = await axios.request(options);
-        setMovies(response.data.items);
-        setLoading(false);
-      } catch (error) {
-        console.error(error);
-        setLoading(false);
-      }
-    };
-
-    fetchMovies();
-  }, []);
 
   if (loading) {
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
         <ActivityIndicator size="large" color="#ffffff" />
+      </View>
+    );
+  }
+  
+  if (error) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <Text style={{ color: "red" }}>Error: {error.message}</Text>
       </View>
     );
   }

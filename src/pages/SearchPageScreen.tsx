@@ -14,37 +14,25 @@ import config from "config";
 import { useNavigation } from "expo-router";
 import InputText from "@/components/InputText";
 import NavigationItem from "@/components/NavigationItem";
+import useFetchMovies from "@/hooks/useFetchMovies";
 const SearchLogo = require("../assets/images/SearchLogo.png");
 const PlayButton = require("../assets/images/PlayButton.png");
 const SearchPageScreen = () => {
-  const [movies, setMovies] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const { movies, loading, error } = useFetchMovies();
   const navigation = useNavigation();
-  // Call API when component mounted
-  useEffect(() => {
-    const fetchMovies = async () => {
-      const options = {
-        method: "GET",
-        url: "https://ophim1.com/danh-sach/phim-moi-cap-nhat",
-      };
-
-      try {
-        const response = await axios.request(options);
-        setMovies(response.data.items);
-        setLoading(false);
-      } catch (error) {
-        console.error(error);
-        setLoading(false);
-      }
-    };
-
-    fetchMovies();
-  }, []);
 
   if (loading) {
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
         <ActivityIndicator size="large" color="#ffffff" />
+      </View>
+    );
+  }
+  
+  if (error) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <Text style={{ color: "red" }}>Error: {error.message}</Text>
       </View>
     );
   }
